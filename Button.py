@@ -2,7 +2,6 @@ import pygame
 import time
 from Text_Object import text_object
 
-
 def create_button(button_message, display, x, y, width, height, inactive_colour, active_colour, action = None):
 	mouse_position = pygame.mouse.get_pos()
 	click = pygame.mouse.get_pressed()
@@ -16,7 +15,7 @@ def create_button(button_message, display, x, y, width, height, inactive_colour,
 	else:
 		pygame.draw.rect(display, inactive_colour, (x, y, width, height))
 
-	button_text = pygame.font.SysFont("ComicSans", 40)
+	button_text = pygame.font.Font("Times New Roman", 20)
 	text_surface, text_rectangle = text_object(button_message, button_text)
 	text_rectangle.center = ((x+width/2), (y+height/2))
 	display.blit(text_surface, text_rectangle)
