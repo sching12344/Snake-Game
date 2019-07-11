@@ -15,7 +15,7 @@ def create_button(button_message, display, x, y, width, height, inactive_colour,
 	else:
 		pygame.draw.rect(display, inactive_colour, (x, y, width, height))
 
-	button_text = pygame.font.Font("Times New Roman", 20)
-	text_surface, text_rectangle = text_object(button_message, button_text)
+	button_font = pygame.font.Font(None, 40)
+	text_surface, text_rectangle = text_object(button_message, button_font)
 	text_rectangle.center = ((x+width/2), (y+height/2))
 	display.blit(text_surface, text_rectangle)
