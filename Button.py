@@ -1,15 +1,16 @@
 import pygame
 import time
 from Text_Object import text_object
+from Start_Game import start_game
 
-def create_button(button_message, display, x, y, width, height, inactive_colour, active_colour, action = None):
+def create_button(button_message, display, x, y, width, height, inactive_colour, active_colour):
 	mouse_position = pygame.mouse.get_pos()
 	click = pygame.mouse.get_pressed()
 
 	if (x + width > mouse_position[0] > x) and (y + height > mouse_position[1] > y):
 		pygame.draw.rect(display, active_colour, (x, y, width, height))
-		if click[0] == 1 and action != None:
-			action()
+		if click[0] == 1:
+			return True
 	else:
 		pygame.draw.rect(display, inactive_colour, (x, y, width, height))
 
