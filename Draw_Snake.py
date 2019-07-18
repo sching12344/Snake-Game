@@ -29,8 +29,6 @@ class Snake():
 
 		eye_ball_radius = int(radius//1.5)
 
-		"""Eyeball positioning needs to be completed for up and down + I deleted the eyeball positions"""
-		
 		if self.head_direction == "right":
 			eyeball_position_one = (x+eye_ball_radius, y-eye_ball_radius)
 			eyeball_position_two = (x+eye_ball_radius, y+eye_ball_radius)

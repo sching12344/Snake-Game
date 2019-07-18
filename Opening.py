@@ -3,7 +3,6 @@ import time
 from Draw_Snake import *
 from Button import create_button
 from Text_Object import text_object
-
 #creates a clock for the game
 pygame.init()
 clock = pygame.time.Clock()
@@ -63,8 +62,6 @@ def main_menu(display_width, display_height, game_display, colours):
 		text_surface, text_rectangle = text_object("Welcome to Snake Heaven", large_text)
 		text_rectangle.center = (display_width/2, display_height/5)
 		game_display.blit(text_surface, text_rectangle)
-		#pygame.draw.circle(game_display, colours[0], (display_width//2, display_height//2), 10, 5)
-		#game_display.blit(apple_image, (display_height/2,display_width/2))
 
 		action_one = create_button("Start Game!", game_display, display_width/8, display_height*6.5/10, 200, 100, colours["dark_green"], colours["bright_green"])
 		action_two = create_button("Quit Game!", game_display, display_width*5/8, display_height*6.5/10, 200, 100, colours["red"], colours["bright_red"])
@@ -74,6 +71,6 @@ def main_menu(display_width, display_height, game_display, colours):
 		elif action_two == True:
 			pygame.quit()
 			quit()
-
+			
 		pygame.display.update()
 		clock.tick(15)
