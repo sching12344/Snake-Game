@@ -50,11 +50,11 @@ class Snake():
 
 	def update(self):
 
-		for a in range(len(self.body)):
+		for a in range(0, len(self.body)):
 
 			if self.body[a] in self.turns:
 				self.direction[a] = self.turns[self.body[a]]
-				if a ==0:
+				if a == 0:
 					del self.turns[self.body[a]]
 
 			if self.direction[a] == "right":
@@ -66,8 +66,8 @@ class Snake():
 			elif self.direction[a] == "down":
 				self.body[a] = (self.body[a][0], self.body[a][1]+2)
 
-		self.head = (self.body[len(self.body)-1][0], self.body[len(self.body)-1][1])
-		self.head_direction = self.direction[len(self.direction)-1]	
+		self.head = self.body[-1]
+		self.head_direction = self.direction[-1]	
 		
 
 	def create_head_background(self, x, y, radius, white, black, bright_red, sky_blue):
@@ -84,7 +84,6 @@ class Snake():
 
 
 	def create_body_background(self, apple_width, apple_height):
-		#surface, colour, position, radius, width =0
 		beginning_height = self.display_height*2//3 - 50
 		ending_height = self.display_height//2 - apple_height
 		starting_width = self.display_width//2-apple_width
@@ -92,7 +91,6 @@ class Snake():
 		first_circle_radius = 10
 		next_circle = 15
 
-		"""Create a snake that reaches to top of the apple +2 (to reach the top)"""
 		last_row = (beginning_height-ending_height)//(next_circle)+1
 		for k in range((beginning_height-ending_height)//(next_circle)+2):
 			if k%2==0:

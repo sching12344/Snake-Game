@@ -7,7 +7,6 @@ import time
 
 pygame.init()
 
-"""This is the main function of my snake game"""
 display_height = 600
 display_width = 800
 game_display = pygame.display.set_mode((display_width, display_height))
@@ -18,8 +17,5 @@ colours = {"white":(255,255,255), "black":(0,0,0), "bright_red":(255,0,0), "red"
 		 "grey":(166,166,166), "sky_blue":(132,206,250), "dark_blue":(0,0,255), 
 		 "bright_orange": (255,83,0), "orange":(255,140,0)}
 
-"""List of fonts: https://docs.microsoft.com/en-us/typography/fonts/windows_10_font_list"""
 activity = main_menu(display_width, display_height, game_display, colours)
-#Create the snake
-#start thegame
 start_game(display_width, display_height, game_display, colours)

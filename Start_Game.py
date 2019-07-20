@@ -4,6 +4,7 @@ import random
 from Draw_Snake import *
 from crashed import crashed
 
+
 def show_score(count, black, game_display):
 	text = pygame.font.Font(None, 30).render("Happiness Level: {}".format(count), True, black)
 	game_display.blit(text, (30,8))
@@ -40,12 +41,13 @@ def arrange_turns(player_snake, direction, x, y):
 
 	if direction == "right" or direction == "left":
 		if player_snake.head_direction == "up":
-			if new_y <25:
-				return_y = int(y[0])*100-25
-			elif new_y >75:
-				return_y = (int(y[0])+1)*100-25
-			elif (new_y>=25 and new_y<75) or new_y == 75:
+			if new_y >=25 and new_y <75:
 				return_y = int(y[0])*100+25
+			elif new_y >=75:
+				return_y = (int(y[0])+1)*100-25
+			elif new_y < 25:
+				return_y = int(y[0])*100-25
+			
 		elif player_snake.head_direction == "down":
 			if new_y <=25:
 				return_y = int(y[0])*100+25
@@ -55,7 +57,7 @@ def arrange_turns(player_snake, direction, x, y):
 				return_y = (int(y[0])+1)*100-25
 
 					
-	elif direction == "up" or direction == "down":
+	if direction == "up" or direction == "down":
 		if player_snake.head_direction == "right":
 			if new_x <=25:
 				return_x = int(x[0])*100+25
@@ -82,9 +84,8 @@ def create_apple(player_snake):
 	start_width = 150
 	start_height = 50
 	x_position, y_position = start_width+(random.randint(0,9)*50), start_height+(random.randint(0,9)*50)
-	for b in range(len(player_snake.body)):
-		if (x_position, y_position) == player_snake.body[b]:
-			return create_apple(player_snake)
+	if (x_position, y_position) in player_snake.body:
+		return create_apple(player_snake)
 	else:
 		return (x_position+25, y_position+25), (x_position, y_position)
 
@@ -106,17 +107,12 @@ def start_game(display_width, display_height, game_display, colours):
 
 	not_crashed = True
 	while not_crashed:
-		# Test if the snake has crashed into itself after the recent update function has been run. for loop cannot be tested yet because snake body is not long enough.
 		if player_snake.head[0] >= 650 or player_snake.head[0] <=150 or player_snake.head[1] <= 50 or player_snake.head[1] >= 550:
 			not_crashed = False
-		for a in range(len(player_snake.body)-1):
-			if player_snake.head == player_snake.body[a]:
-				not_crashed = False
 
-		if player_snake.head == hit_position:
-			hit_position, apple_position = create_apple(player_snake)
-			count += 1
-			print(count)
+		for a in range(len(player_snake.body)-1):
+			if (player_snake.head[0] >= player_snake.body[a][0]-8 and player_snake.head[0] <= player_snake.body[a][0]+8) and (player_snake.head[1] >= player_snake.body[a][1]-8 and player_snake.head[1] <= player_snake.body[a][1]+8):
+				not_crashed = False
 
 
 		for event in pygame.event.get():
@@ -140,13 +136,34 @@ def start_game(display_width, display_height, game_display, colours):
 
 				elif event.key == pygame.K_DOWN and player_snake.head_direction != "up":
 					player_snake.turns[arrange_turns(player_snake, "down", x, y)] = "down"
-
+		
 		create_game_background(game_display, colours, display_width, display_height)
 		game_display.blit(apple_image_two, (0,0))
 		show_score(count, colours["black"], game_display)
 		game_display.blit(apple_image, (apple_position))
 		player_snake.create_snake(snake_body, colours["white"], colours["black"], colours["bright_red"], colours["sky_blue"])
 
+		
+		if player_snake.head == hit_position:
+			speed += 0.1
+			new_body_direction = player_snake.direction[0]
+
+			if player_snake.direction[0] == "right":
+				player_snake.body.insert(0, (player_snake.body[0][0]-24, player_snake.body[0][1]))
+				player_snake.direction.insert(0, new_body_direction)
+			elif player_snake.direction[0] == "left":
+				player_snake.body.insert(0, (player_snake.body[0][0]+24, player_snake.body[0][1]))
+				player_snake.direction.insert(0, new_body_direction)
+			elif player_snake.direction[0] == "up":
+				player_snake.body.insert(0, (player_snake.body[0][0], player_snake.body[0][1]+24))
+				player_snake.direction.insert(0, new_body_direction)
+			elif player_snake.direction[0] == "down":
+				player_snake.body.insert(0, (player_snake.body[0][0], player_snake.body[0][1]-24))
+				player_snake.direction.insert(0, new_body_direction)
+		
+			hit_position, apple_position = create_apple(player_snake)
+			count += 1
+			
 		player_snake.update()
 		pygame.display.update()
 		clock.tick(60)

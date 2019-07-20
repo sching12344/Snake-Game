@@ -3,11 +3,9 @@ import time
 from Draw_Snake import *
 from Button import create_button
 from Text_Object import text_object
-#creates a clock for the game
+
 pygame.init()
 clock = pygame.time.Clock()
-
-#Load an image of an apple for the opening menu
 
 
 def create_background(game_display, colours, display_height, display_width):
@@ -33,23 +31,17 @@ def create_background(game_display, colours, display_height, display_width):
 					pygame.draw.rect(game_display, colours["bright_green"], (x_position, height,50,50))
 				x_position +=50
 		height += 50
-
 		
-
-		#Load the image of the apple and snake and then blit the snake image before the apple (make it look like the snake is eating the apple)
 		apple_image = pygame.image.load("new_apple.png")
 		apple_image.convert_alpha()
 		apple_width, apple_height = (80, 63)
 
-		#create the image of the snake using circles
 		snake_background = Snake(game_display, colours["orange"], colours["bright_orange"], display_width, display_height, 425, 550//2)
 		snake_head_x, snake_head_y, radius = snake_background.create_body_background(apple_width, apple_height)
 		snake_background.create_head_background(snake_head_x, snake_head_y, radius, colours["white"], colours["black"], colours["bright_red"], colours["sky_blue"])
 		game_display.blit(apple_image, (display_width//2-apple_width//2, display_height//2-apple_height))
 
-#colours = [white, black, bright_red, red, bright_green, green, dark_green, grey, sky_blue]
 def main_menu(display_width, display_height, game_display, colours):
-	"""Creates the main menu (second stack) for users to see when they enter the game. Default button size is 100 width and 50 height"""
 	while True:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -71,6 +63,6 @@ def main_menu(display_width, display_height, game_display, colours):
 		elif action_two == True:
 			pygame.quit()
 			quit()
-			
+
 		pygame.display.update()
 		clock.tick(15)
